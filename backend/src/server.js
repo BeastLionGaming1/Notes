@@ -30,6 +30,7 @@ app.get("/", (req, res) => {
       notes: {
         create: "/create",
         delete: "/note/:id",
+        search: "/search?title={title}",
         notes: "/notes",
         specificNote: "/note/:id",
       }
@@ -39,6 +40,6 @@ app.get("/", (req, res) => {
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log("Server Running on PORT: 3000");
+    console.log(`Server Running on PORT: ${PORT}`);
   })
 })
