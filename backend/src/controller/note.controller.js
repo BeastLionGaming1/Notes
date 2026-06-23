@@ -85,6 +85,49 @@ export const deleteNote = async (req, res) => {
   }
 }
 
+export const searchNote = async (req, res) => {
+  try {
+    const { title } = req.query;
+
+    if (!title) {
+      return res.status(400).json({
+        success: false,
+        message: "Title is required!",
+        status_code: 400
+      });
+    }
+
+    const note = await Note.findOne({
+      title: { $regex: title, $options: "i" }
+    });
+
+    if (!note) {
+      return res.status(404).json({
+        success: false,
+        message: "Note not Found",
+        status_code: 404
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Note Found",
+      status_code: 200,
+      note,
+    });
+  } catch (err) {
+    console.log("Error Searching Note:", err);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      status_code: 500,
+      err: ENV.NODE_ENV === "development"
+  ? err.message
+  : undefined
+    });
+  }
+}
+
 export const getNote = async (req, res) => {
   try {
     const { id } = req.params;
