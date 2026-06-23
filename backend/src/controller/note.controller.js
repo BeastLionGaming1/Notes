@@ -97,8 +97,11 @@ export const searchNote = async (req, res) => {
       });
     }
 
-    const note = await Note.findOne({
-      title: { $regex: title, $options: "i" }
+    const note = await Note.find({
+    $or: [
+        { title: { $regex: title, $options: "i" } },
+        { content: { $regex: title, $options: "i" } }
+     ]
     });
 
     if (!note) {

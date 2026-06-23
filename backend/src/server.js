@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
     success: true,
     message: "Hello There, Welcome to My Server!",
     status_code: 200,
+    version: "1.0.0",
     endpoints: {
       auth: {
         signup: "/auth/signup",
